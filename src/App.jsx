@@ -1,33 +1,24 @@
-import CartPage from "./components/Cart/Cart.Page";
-import ProductCard from "./components/Cart/ProductCard";
-import ThemeToggle from "./components/Theme/ThemeToggle";
+import React from "react";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router";
+import CartPage from "./components/Cart/CartPage";
+import ProductPage from "./components/Cart/ProductPage";
+import { CartProvider } from "./core/context/CartContext";
 
 function App() {
-  const products = [
-    {
-      id: Math.random(),
-      name: "Product 1",
-      price: "18000",
-    },
-    {
-      id: Math.random(),
-      name: "Product 2",
-      price: "20000",
-    },
-    {
-      id: Math.random(),
-      name: "Product 3",
-      price: "40000",
-    },
-  ];
   return (
     <>
-      <ThemeToggle />
-
-      {products.map((product) => (
-        <ProductCard product={product} key={product.id} />
-      ))}
-      <CartPage />
+      <CartProvider>
+        <Router>
+          <nav>
+            <Link to="/">Products</Link>
+            <Link to="/cart">Cart</Link>
+          </nav>
+          <Routes>
+            <Route path="/" element={<ProductPage />}></Route>
+            <Route path="/cart" element={<CartPage />}></Route>
+          </Routes>
+        </Router>
+      </CartProvider>
     </>
   );
 }
